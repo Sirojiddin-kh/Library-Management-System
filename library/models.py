@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from datetime import datetime, timedelta
 
 
 class Category(models.Model):
@@ -60,9 +62,14 @@ class Received(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     received_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    returned_at = models.DateField(default=datetime.now()+timedelta(days=10))
+
+    # @property
+    # def finish(self):
+    #     return self.received_at(datetime.now()) + self.returned_at(timedelta(days=10))
 
     def __str__(self):
-        return f'{self.reader.name}  ||  {self.book.name}  ||  {self.received_at}'
+        return f'{self.reader.full_name}  ||  {self.book.name}  ||  {self.received_at}'
 
 
 class Menu(models.Model):

@@ -1,7 +1,7 @@
 from django import forms
 from . models import *
 from django.contrib.auth.forms import UserCreationForm
-
+from django.utils import timezone
 
 class CreateUserForm(forms.ModelForm):
     class Meta:
@@ -32,3 +32,14 @@ class CreateBookForm(forms.ModelForm):
             'language': forms.TextInput(attrs={'class': 'form-control'}),
             'img': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
+
+class CreateReceivedForm(forms.ModelForm):
+    class Meta:
+        model = Received
+        fields = ['reader', 'book']
+        widgets = {
+            'name': forms.Select(attrs={'class': 'form-control'}),
+            'book': forms.Select(attrs={'class': 'form-control'}) }
+
+

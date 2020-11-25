@@ -1,0 +1,24 @@
+{%extends "base.html"%}
+{% load static %}
+{% block content %}
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Username</th>
+      <th scope="col">Received name</th>
+      <th scope="col">Return date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <th scope="row"><i class="fas fa-circle"></i></th>
+      <td>{{ order.reader }}</td>
+      <td>{{ order.book }}</td>
+      <td>{{ order.returned_at }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
