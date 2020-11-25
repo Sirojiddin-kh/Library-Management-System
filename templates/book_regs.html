@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+{% load static %}
+{% block content %}
+     <div class="personal_info">
+          <div class="card">
+            <div class="card-header">New Book Registration </div>
+            <div class="card-body">
+            <form method="post" action=""  enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ books.as_p }}
+            <div class="d-flex justify-content-center mt-3 login_container">
+                    <input class="btn login_btn" type="submit" value="Submit">
+            </div>
+            </form>
+            {% if img_obj %}
+              <h3>Succesfully uploaded :</h3>
+              <img src="{{ img_obj.img.url}}" alt="connect" style="max-height:300px">
+            {% endif %}
+            </div>
+{% endblock %}
