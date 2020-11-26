@@ -4,12 +4,14 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="{% static '/style.css' %}">
-<hr>
 <div class="container bootstrap snippets bootdey">
     <div class="row">
         <div class="col-lg-12">
             <div class="main-box no-header clearfix">
                 <div class="main-box-body clearfix">
+                    <div id="custom-search" class="top-search-bar">
+                        <input class="form-control" type="text" placeholder="Search..">
+                    </div>
                     <div class="table-responsive">
                         <table class="table user-list">
                             <thead>
@@ -26,7 +28,7 @@
                                 <tr>
                                     <td>
                                         <img src="{{book.img.url }}" alt="">
-                                        <a href="#" class="user-link">{{ book.name }}</a>
+                                        <a href="{% url 'detailbook' book.id %}" class="user-link">{{ book.name }}</a>
                                     </td>
                                     <td>{{ book.author }}</td>
                                     <td class="text-center">

@@ -1,0 +1,49 @@
+{%extends "base.html"%}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+            <div class="card p-2 text-center">
+                <div class="row">
+                    <div class="col-md-7 border-right no-gutters">
+                        <div class="py-3"><img src="{{ object.img.url }}" width="100" class="rounded-circle">
+                            <h4 class="text-secondary">{{ object.name}}</h4>
+                            <div class="stats">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex flex-column"> <span class="text-left head">Author</span> <span class="text-left bottom">{{ object.author }}</span> </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column"> <span class="text-left head"> Category</span> <span class="text-left bottom">{{ object.category }}</span> </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column"> <span class="text-left head">Eddition</span> <span class="text-left bottom">{{ object.eddition }}</span> </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column"> <span class="text-left head">Publication Year</span> <span class="text-left bottom">{{ object.publication }}</span> </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column"> <span class="text-left head">Cost</span> <span class="text-left bottom">$ {{ object.cost }}</span> </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column"> <span class="text-left head">Language</span> <span class="text-left bottom">{{ object.language }}</span> </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column"> <span class="text-left head">Pages</span> <span class="text-left bottom">{{ object.pages }}</span> </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

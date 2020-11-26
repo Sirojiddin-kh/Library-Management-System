@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, CreateBookForm, CreateReceivedForm
 from . models import Reader, Book, Received
+from django.views.generic import DetailView
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -35,13 +36,15 @@ def books(request):
 
 def allUsers(request):
     all_users = Reader.objects.all().order_by('created_at')
-    context = {'users': all_users}
+    total_users = all_users.count()
+    context = {'users': all_users, 'total_users': total_users}
     return render(request, 'all_users.html', context)
 
 
 def allBooks(request):
     all_books = Book.objects.all().order_by('created_at')
-    context = {'books': all_books}
+    total_books = all_books.count()
+    context = {'books': all_books, 'total_books': total_books}
     return render(request, 'all_books.html', context)
 
 
@@ -60,5 +63,26 @@ def allorders(request):
     context = {'orders': orders}
     return render(request, "All_Orders.html", context)
 
+
+class UserDetailView(DetailView):
+    template_name = 'detail.html'
+    model = Reader
+    context_object_name = 'object'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['list'] = Reader.objects.all().exclude(id=self.object.id)
+        return context
+
+
+class BookDetailView(DetailView):
+    template_name = 'detailBook.html'
+    model = Book
+    context_object_name = 'object'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['list'] = Book.objects.all().exclude(id=self.object.id)
+        return context
 
 
