@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+{% for book in bsearch %}
+ <a href="{% url 'detailbook' book.id %}" class="user-link">{{ book.name }}</a>
+{% endfor %}
 </body>
 </html>

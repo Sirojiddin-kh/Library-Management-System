@@ -32,6 +32,7 @@ class Book(models.Model):
     amount = models.IntegerField()
     img = models.ImageField(upload_to='books', null=True)
     pages = models.IntegerField(null=True)
+    description = models.TextField(null=True    )
     language = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -11,8 +11,12 @@
             <div class="main-box no-header clearfix">
                 <div class="main-box-body clearfix">
                     <div id="custom-search" class="top-search-bar">
-                        <input class="form-control" type="text" placeholder="Search..">
+                        <form action="{% url 'searchuser' %}" method="get">
+                            <input class="form-control" type="text" name="allusers" placeholder="Search..">
+                            <button type="submit"> Search </button>
+                        </form>
                     </div>
+
                     <div class="table-responsive">
                         <table class="table user-list">
                             <thead>
@@ -39,13 +43,13 @@
                                         <a href="#">{{ user.email }}</a>
                                     </td>
                                     <td style="width: 20%;">
-                                        <a href="#" class="table-link text-warning">
+                                        <a href="{% url 'delete_user' user.id  %}" class="table-link text-warning">
                                             <span class="fa-stack">
                                                 <i class="fa fa-trash-o" style="font-size:24px"></i>
 
                                             </span>
                                         </a>
-                                        <a href="#" class="table-link text-warning">
+                                        <a href="{% url 'account' user.id %}" class="table-link text-warning">
                                             <span class="fa-stack">
                                                 <i class='fas fa-edit' style='font-size:22px'></i>
                                             </span>
@@ -56,6 +60,28 @@
                             </tbody>
                         </table>
                     </div>
+                       {% if users.has_other_pages %}
+                            <ul class="pagination">
+                                {% if users.has_previous %}
+                                    <li><a href="?page={{ user.previous_page_number}}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&laquo;</span></li>
+                                {% endif %}
+                                {% for i in users.paginator.page_range %}
+                                    {% if users.number == i %}
+                                        <li class="active"><span>{{ i}}<span class="sr-only">(current)</span></span></li>
+                                    {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if users.has_next %}
+                                    <li><a href="?page={{ users.next_page_number}}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                            </ul>
                 </div>
             </div>
         </div>

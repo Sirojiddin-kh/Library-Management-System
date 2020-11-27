@@ -19,7 +19,7 @@ class CreateUserForm(forms.ModelForm):
 class CreateBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['name', 'author', 'eddition', 'publication', 'category', 'cost', 'amount', 'pages', 'language', 'img']
+        fields = ['name', 'author', 'eddition', 'publication', 'category', 'cost', 'amount', 'pages', 'language', 'img','description']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
@@ -31,6 +31,7 @@ class CreateBookForm(forms.ModelForm):
             'pages': forms.TextInput(attrs={'class': 'form-control'}),
             'language': forms.TextInput(attrs={'class': 'form-control'}),
             'img': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'})
         }
 
 

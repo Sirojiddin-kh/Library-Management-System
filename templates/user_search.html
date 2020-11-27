@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>User Search </title>
 </head>
 <body>
-$END$
+{% for user in usearch %}
+ <a href="{% url 'detailuser' user.id %}" class="user-link">{{ user.full_name }}</a>
+{% endfor %}
 </body>
 </html>

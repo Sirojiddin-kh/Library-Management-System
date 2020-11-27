@@ -8,12 +8,11 @@
 		<div class="card card-body">
 
 
-			<p>Are you sure you want to delete "{{ user.name }}"?</p>
+			<p>Are you sure you want to delete "{{ deluser.full_name }}" ?</p>
 
-			<form action="{% url 'delete_user' user.id  %}" method="POST">
-
+			<form action="{% url 'delete_user' deluser.id %}" method="POST">
 				{% csrf_token %}
-				<a class="btn btn-warning" href="{% url 'index' %}">Cancel</a>
+				<a class="btn btn-warning" href="{% url 'allusers' %}">Cancel</a>
 
 				<input class="btn btn-danger" type="submit" name="Confirm">
 			</form>
