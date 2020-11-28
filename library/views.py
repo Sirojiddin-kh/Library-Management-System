@@ -7,7 +7,15 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
-    return render(request, 'index.html', context={})
+    users = Reader.objects.all()
+    books = Book.objects.all()
+    received = Received.objects.all()
+    total_receives = received.count()
+    total_users = users.count()
+    total_books = books.count()
+    context = {'utotal':total_users, 'btotal': total_books, 'receives': total_receives}
+
+    return render(request, 'index.html', context)
 
 
 def userRegistration(request):
@@ -64,11 +72,15 @@ def allBooks(request):
     return render(request, 'all_books.html', context)
 
 
-def receivedBooks(request):
+def receivedBooks(request, pk):
+    decrement = Received.objects.get(id=pk)
+    dec_amount = decrement.count()
     received = CreateReceivedForm()
     if request.method == 'POST':
         received = CreateReceivedForm(request.POST)
         if received.is_valid():
+            for i in dec_amount:
+                i = i-1
             received.save()
 
             return redirect('index')
