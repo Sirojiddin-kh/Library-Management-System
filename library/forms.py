@@ -3,6 +3,7 @@ from . models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 
+
 class CreateUserForm(forms.ModelForm):
     class Meta:
         model = Reader

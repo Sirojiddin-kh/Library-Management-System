@@ -9,5 +9,6 @@ admin.site.register(Received)
 admin.site.register(Menu)
 admin.site.register(SideBar)
 admin.site.register(SubMenu)
+admin.site.register(HLog)
 
 # Register your models here.

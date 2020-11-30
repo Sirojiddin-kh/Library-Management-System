@@ -1,6 +1,9 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from datetime import datetime, timedelta
+
 
 
 class Category(models.Model):
@@ -32,13 +35,14 @@ class Book(models.Model):
     amount = models.IntegerField()
     img = models.ImageField(upload_to='books', null=True)
     pages = models.IntegerField(null=True)
-    description = models.TextField(null=True    )
+    description = models.TextField(null=True)
     language = models.CharField(max_length=200)
+    status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.name} | {self.author}  | {self.amount}'
+        return f'{self.name} '
 
 
 class Reader(models.Model):
@@ -58,14 +62,6 @@ class Reader(models.Model):
         verbose_name_plural = "Foydalanuvchilar"
 
 
-class SingleUserReceives(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def single(self):
-        return Received.objects.filter(reader=self)
-
-
 class Received(models.Model):
     reader = models.ForeignKey(Reader, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
@@ -76,6 +72,23 @@ class Received(models.Model):
 
     def __str__(self):
         return f'{self.reader.full_name}  ||  {self.book.name}  ||  {self.received_at}'
+
+
+class HLog(models.Model):
+    user = models.ForeignKey(Reader, null=True, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, null=True, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.user}  | {self.book}'
+
+
+@receiver(post_save, sender=Received)
+def create_log_orders(sender, instance, **kwargs):
+    mylog = HLog.objects.create(user=instance.reader, book=instance.book)
+    return mylog
 
 
 

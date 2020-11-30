@@ -44,9 +44,9 @@ def books(request):
 
 
 def allUsers(request):
-    all_users = Reader.objects.all().order_by('created_at')
+    all_users = Reader.objects.all().order_by('-created_at')
     page = request.GET.get('page', 1)
-    paginator = Paginator(all_users, 1)
+    paginator = Paginator(all_users, 5)
     try:
         all_users = paginator.page(page)
     except PageNotAnInteger:
@@ -61,7 +61,7 @@ def allBooks(request):
     all_books = Book.objects.all().order_by('created_at')
     total_books = all_books.count()
     page = request.GET.get('page', 1)
-    paginator = Paginator(all_books, 1)
+    paginator = Paginator(all_books, 5)
     try:
         all_books = paginator.page(page)
     except PageNotAnInteger:
@@ -72,17 +72,20 @@ def allBooks(request):
     return render(request, 'all_books.html', context)
 
 
-def receivedBooks(request, pk):
-    decrement = Received.objects.get(id=pk)
-    dec_amount = decrement.count()
+def receivedBooks(request):
+    # book = Book.objects.get(id=pk)
     received = CreateReceivedForm()
     if request.method == 'POST':
         received = CreateReceivedForm(request.POST)
         if received.is_valid():
-            for i in dec_amount:
-                i = i-1
-            received.save()
-
+            book = received.cleaned_data['book']
+            selected_book = Book.objects.get(id=book.id)
+            if selected_book.amount > 0:
+                received.save()
+                selected_book.amount -= 1
+                if selected_book.amount == 0:
+                    selected_book.status = False
+                selected_book.save()
             return redirect('index')
     return render(request,  'Received_Form.html', {'received': received,})
 
