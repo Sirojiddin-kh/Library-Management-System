@@ -1,4 +1,7 @@
-{% load static %}
+{% load static i18n app_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as languages %}
+
 <html lang="en">
 
 <head>
@@ -54,30 +57,38 @@
                             <li class="nav-divider">
                                 Menu
                             </li>
+                            <ul >
+                                   {% for language, title in languages %}
+                                   <li class="{% if LANGUAGE_CODE == language %}active{% endif %}" style="display: inline-block">
+                                    {% get_url_tag request=request lang=language as url %}
+                                     <a href="{{ url }}" class="link-head rot">{{ title }}</a>
+                                  {% endfor %}
+                            </ul>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-6" aria-controls="submenu-6"><i class="fas fa-fw fa-file"></i> Pages </a>
                                 <div id="submenu-6" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                          <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'index'%}"> Dashboard </a>
+                                            <a class="nav-link" href="{% url 'index'%}">{% trans 'Dashboard' %} </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'user'%}"> Add Users</a>
+                                            <a class="nav-link" href="{% url 'user'%}"> {% trans 'Add Users' %}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'book'%}">Add Books</a>
+                                            <a class="nav-link" href="{% url 'book'%}">{% trans 'Add Books' %}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'allusers' %}">All Users</a>
+                                            <a class="nav-link" href="{% url 'allusers' %}">{% trans 'All Users' %}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'allbooks'%}">All Books </a>
+                                            <a class="nav-link" href="{% url 'allbooks'%}">{% trans 'All Books' %} </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'received' %}">Received Books </a>
+                                            <a class="nav-link" href="{% url 'received' %}">{% trans 'Received Books' %} </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'orders' %}">All Receives  </a>
+                                            <a class="nav-link" href="{% url 'orders' %}">{% trans 'All Receives' %}  </a>
                                         </li>
 
                                     </ul>

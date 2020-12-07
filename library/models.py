@@ -5,7 +5,6 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,7 +45,7 @@ class Book(models.Model):
 
 
 class Reader(models.Model):
-   # user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    # user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=200)
     img = models.ImageField(upload_to='reader')
     phone = models.CharField(max_length=13, null=True)
@@ -67,8 +66,7 @@ class Received(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     received_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    returned_at = models.DateField(default=datetime.now()+timedelta(days=10))
-
+    returned_at = models.DateField(default=datetime.now() + timedelta(days=10))
 
     def __str__(self):
         return f'{self.reader.full_name}  ||  {self.book.name}  ||  {self.received_at}'
@@ -89,10 +87,6 @@ class HLog(models.Model):
 def create_log_orders(sender, instance, **kwargs):
     mylog = HLog.objects.create(user=instance.reader, book=instance.book)
     return mylog
-
-
-
-
 
 
 class Menu(models.Model):
@@ -130,10 +124,5 @@ class SubMenu(models.Model):
 
     def __str__(self):
         return f'{self.menu.name}    ||     {self.name}'
-
-
-
-
-
 
 # Create your models here.
